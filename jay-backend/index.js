@@ -18,7 +18,7 @@ app.get('/test',(req,res)=>{
   res.send(`its working`)
 })
 app.use("/", express.static(path.join(__dirname, "..", "jay/dist")));
-const Port =  process.env.PORT;
+const Port =  process.env.port;
 
 
 
