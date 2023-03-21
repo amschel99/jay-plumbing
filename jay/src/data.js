@@ -2,7 +2,7 @@ export const products=[
     {
         "name": "Bib Tap -Chrome Plated",
         // "description": "Keep your plumbing and fittings secure with the galvanized iron sockets.\nPlace your order today and we\u2019ll deliver in just 2-4 days.\nPlace your order today and we\u2019ll deliver in just 2-4 days.\nKey Features:\n> Galvanized Iron\n> \u00bd inch",
-        "price": "KSh 400",
+        "price": 400,
         "image": "https://www.nemsiholdings.co.ke/wp-content/uploads/2020/08/P009-BIB-TAP-CHROME-PLATED-ABS-scaled-1200x1200.webp",
         "type": 1,
         "id": 1
@@ -11,7 +11,7 @@ export const products=[
         {
         "name": "Black Basin Tap",
         // "description": "Keep your plumbing and fittings secure with the galvanized iron sockets.\nPlace your order today and we\u2019ll deliver in just 2-4 days.\nPlace your order today and we\u2019ll deliver in just 2-4 days.\nKey Features:\n> Galvanized Iron\n> \u00bd inch",
-        "price": "KSh 2200",
+        "price": 2000,
         "image": "/images/black bain tap.png",
         "type": 1,
         "id": 2

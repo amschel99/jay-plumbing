@@ -7,6 +7,7 @@ import {
   IconButton,
   Button,
   Grid,
+  TextField
   
 } from '@mui/material';
 import { AddCircleOutline, RemoveCircleOutline } from '@mui/icons-material';
@@ -16,11 +17,30 @@ import PayIcon from "@mui/icons-material/Payment"
 import { itemRemoved,incrementQuantity,decrementQuantity,setQuantity } from '../../feautures/cart/cartSlice';
 import {  useDispatch, useSelector} from 'react-redux'
 const ShoppingCartItem = () => {
-  
-
+  let price=0;
+const[showMpesaInput,setShowMpesaInput]=React.useState(false)
+const[mpesaNumber,setMpesaNumber]=React.useState(null)
   const cart= useSelector((state)=>state.cart)
   const{totalItems, totalPrice,items}=cart
+  const isValidMpesaNumber = (mpesaNumber) => {
+    const mpesaRegex = /^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s./0-9]*$/g; // Regex for valid MPESA numbers
+    return mpesaRegex.test(mpesaNumber);
+  };
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      if (isValidMpesaNumber(e.target.value)) {
+  
+        setMpesaNumber(e.target.value);
+      } else {
+    
+        setMpesaNumber(null);
+      }
+    }
+  };
 
+  const handleChange = (e) => {
+    setMpesaNumber(e.target.value);
+  };
 
   const dispatch= useDispatch()
 
@@ -37,13 +57,13 @@ const decrementItem= (product)=>{
 const{name, price,image}=product
 
 
-
 dispatch((decrementQuantity({name,price,image})))
 
 
 }
 const incrementItem= (product)=>{
 const{name, price,image}=product
+
 
 
 
@@ -62,6 +82,10 @@ console.log(items)
    
    {
     items.map((item)=>{
+
+
+
+
 return <Card key={item.name} sx={{ display: 'flex' }}>
 <CardMedia
   component="img"
@@ -87,8 +111,8 @@ return <Card key={item.name} sx={{ display: 'flex' }}>
     </Grid>
     <Grid item>
     <input type="number" min="1" max="200" onChange={(e)=>{
-
-     // return dispatch((setQuantity({name:item.name,price:item.price,image:item.image,quantity:e.target.value})))
+console.log(e.target.value)
+      return dispatch((setQuantity({name:item.name,price:item.price,image:item.image,quantity:e.target.value})))
     }}></input>
     </Grid>
     <Grid item>
@@ -108,13 +132,48 @@ return <Card key={item.name} sx={{ display: 'flex' }}>
   total items: {totalItems}
 
   </Typography>
-  <Button  sx={{backgroundColor:'blue', color:'white'}}  component={'a'} href={`whatsapp://send?phone=+254797168636&text=hello, I'm enquiring about the following items from your website:
+  <Typography variant="subtitle1" color="text.secondary">
+  total price: {totalPrice}
+
+  </Typography>
+  <Button id="btn" sx={{backgroundColor:'blue', color:'white'}}  component={'a'} href={`whatsapp://send?phone=+254797168636&text=hello, I'm enquiring about the following items from your website:
 
   
     ${encodeURIComponent(message)}
   
   `} startIcon={<Whatsapp/>} disabled={!totalItems}>Enquire On Whatsapp</Button>
-   <Button sx={{backgroundColor:'blue', color:'white', marginLeft:'10px'}} component={'button'}  startIcon={<PayIcon/>} disabled={!totalItems}>Pay By Mpesa</Button>
+   <Button id='btn' sx={{backgroundColor:'blue', color:'white', marginLeft:'10px'}} component={'button'}  startIcon={<PayIcon/>} disabled={!totalItems}
+
+   onClick={async ()=>{
+    setShowMpesaInput(true)
+
+const res= await fetch("/stk", {
+  method:'POST',
+  headers:{
+    "Content-Type":'application/json'
+  },
+  body:JSON.stringify({phone:mpesaNumber,amount:totalPrice})
+})
+
+if(res.status===200){
+ return alert(`check your phone for an mpesa prompt`)
+}
+if(res.status!==200){
+  return alert(`failed!mpesa number is wrong`) 
+}
+   }}
+   >Pay By Mpesa</Button>
+    <TextField
+      label="Enter MPESA Number"
+      onChange={handleChange}
+      onKeyPress={handleKeyPress}
+      sx={{
+        marginLeft: '5px',
+        height: '10px',
+        display: showMpesaInput ? 'inline' : 'none',
+      }}
+    />
+
     </CardContent>
    </Card>
     

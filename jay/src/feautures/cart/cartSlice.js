@@ -125,15 +125,23 @@ incrementQuantity:{
 name,
 description,
 price,
-image
+image,
+quantity
 }}
   }
 },
 setQuantity:{
 reducer:(state,action)=>{
+  console.log(action.payload)
+  console.log(`state :${JSON.stringify(state.items)}`)
 state.items.map((item,i)=>{
   if(item.name===action.payload.name){
-    state.totalItems=action.payload.quantity//set the quantity to the total quantity passed
+    if(!item.quantity){
+      console.log(action.payload.quantity +"isss")
+      item.quantity=Number(action.payload.quantity)
+      return  state.totalPrice=action.payload.price*action.payload.quantity
+    }
+   item.quantity=Number(action.payload.quantity)//set the quantity to the total quantity passed
    return  state.totalPrice=action.payload.price*action.payload.quantity
 
   }
@@ -145,7 +153,8 @@ prepare:({name,description,price,image,quantity})=>{
 name,
 description,
 price,
-image
+image,
+quantity
 }} 
 }
 
