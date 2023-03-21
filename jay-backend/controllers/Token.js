@@ -79,13 +79,13 @@ const stkPush=async(req,res)=>{
     res.status(400).json(err.response.data);
   });
 }
-const callBack=async(req,res)=>{
+const callBack=async(req,res,next)=>{
    //here mpesa sends the results of the transaction in req.body
 
     const  callbackData =req.body;
     console.log( callbackData);
     //callbackData.Body.stkCallback.CallbackMetadata
-    if(! callbackData.Body.stkCallback.CallbackMetadata){
+    if(! callbackData?.Body?.stkCallback?.CallbackMetadata){
       //if something happened like a user cancelled the process, this code will run
         console.log( callbackData.Body.stkCallback.ResultDesc);
         userMessage=callbackData.Body.stkCallback.ResultDesc
@@ -100,11 +100,12 @@ console.log({phone,amount,trnx_id});
 try{
  const transaction =await PaymentModule.create({PhoneNumber:phone,amount:amount,trnx_id:trnx_id})
  console.log(transaction)
- //return res.json(transaction) we do not need to send saf anything
+ req.transaction={trnx_id,phone,amount}
+ next()
+
 }
 catch(error){
-  console.log(error)
-return;
+ res.status(500).json(error.message)
 }
   
 
@@ -113,8 +114,9 @@ return;
 }
 const sendTransactionDetails= async (req,res)=>{
 try{
-const transaction= await PaymentModule.findOne({PhoneNumber:req.body.phone,trnx_id:req.body.id,amount:req.body.amount})
-res.json(transaction)
+
+const {trnx_id,amount,phone}=req.transaction
+res.json({trnx_id,amount,phone})
 }
 catch(e){
 console.log(e)

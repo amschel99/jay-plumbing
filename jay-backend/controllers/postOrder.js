@@ -9,3 +9,4 @@ res.json(order)
 res.status(500).json(e.message)
     }
 }
+module.exports={postOrder}

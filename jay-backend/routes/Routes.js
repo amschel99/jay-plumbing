@@ -5,6 +5,6 @@ const {postOrder}= require('../controllers/postOrder.js')
 router.post("/",CreateToken,stkPush)
 
 router.post('/callback',callBack)
-router.post("/details",sendTransactionDetails)
+router.get("/details",callBack,sendTransactionDetails)
 router.post("/postOrder",postOrder)
 module.exports=router

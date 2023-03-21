@@ -9,3 +9,4 @@ res.json(orders)
 res.status(500).json(e.message)
     }
 }
+module.exports={getOrders}

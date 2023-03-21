@@ -13,7 +13,7 @@ import {
 import { AddCircleOutline, RemoveCircleOutline } from '@mui/icons-material';
 import Whatsapp from '@mui/icons-material/WhatsApp'
 import PayIcon from "@mui/icons-material/Payment"
-
+import {Link} from 'react-router-dom'
 import { itemRemoved,incrementQuantity,decrementQuantity,setQuantity } from '../../feautures/cart/cartSlice';
 import {  useDispatch, useSelector} from 'react-redux'
 const ShoppingCartItem = () => {
@@ -32,8 +32,8 @@ const[mpesaNumber,setMpesaNumber]=React.useState(null)
   
         setMpesaNumber(e.target.value);
       } else {
-    
-        setMpesaNumber(null);
+    alert(`enter a valid mpesa number`)
+      ;
       }
     }
   };
@@ -142,27 +142,10 @@ console.log(e.target.value)
     ${encodeURIComponent(message)}
   
   `} startIcon={<Whatsapp/>} disabled={!totalItems}>Enquire On Whatsapp</Button>
-   <Button id='btn' sx={{backgroundColor:'blue', color:'white', marginLeft:'10px',marginY:'5px'}} component={'button'}  startIcon={<PayIcon/>} disabled={!totalItems}
+   <Button id='btn' sx={{backgroundColor:'blue', color:'white', marginLeft:'10px',marginY:'5px'}} component={Link} to='/checkout'  startIcon={<PayIcon/>} disabled={!totalItems}
 
-   onClick={async ()=>{
-    setShowMpesaInput(true)
-
-const res= await fetch("/stk", {
-  method:'POST',
-  headers:{
-    "Content-Type":'application/json'
-  },
-  body:JSON.stringify({phone:mpesaNumber,amount:totalPrice})
-})
-
-if(res.status===200){
- return alert(`check your phone for an mpesa prompt`)
-}
-if(res.status!==200){
-  return alert(`failed!mpesa number is wrong`) 
-}
-   }}
-   >Pay By Mpesa</Button>
+   >Buy Now</Button>
+  
     <TextField
       label="Enter MPESA Number"
       onChange={handleChange}
