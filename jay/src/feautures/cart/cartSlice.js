@@ -132,8 +132,7 @@ quantity
 },
 setQuantity:{
 reducer:(state,action)=>{
-  console.log(action.payload)
-  console.log(`state :${JSON.stringify(state.items)}`)
+
 state.items.map((item,i)=>{
   if(item.name===action.payload.name){
     if(!item.quantity){

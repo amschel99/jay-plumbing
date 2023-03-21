@@ -110,7 +110,7 @@ return <Card key={item.name} sx={{ display: 'flex' }}>
       </IconButton>
     </Grid>
     <Grid item>
-    <input type="number" min="1" max="200" onChange={(e)=>{
+    <input style={{marginY:'5px'}} type="number" min="1" max="200" onChange={(e)=>{
 console.log(e.target.value)
       return dispatch((setQuantity({name:item.name,price:item.price,image:item.image,quantity:e.target.value})))
     }}></input>
@@ -136,13 +136,13 @@ console.log(e.target.value)
   total price: {totalPrice}
 
   </Typography>
-  <Button id="btn" sx={{backgroundColor:'blue', color:'white'}}  component={'a'} href={`whatsapp://send?phone=+254797168636&text=hello, I'm enquiring about the following items from your website:
+  <Button id="btn" sx={{backgroundColor:'blue', color:'white',marginY:'5px'}}  component={'a'} href={`whatsapp://send?phone=+254797168636&text=hello, I'm enquiring about the following items from your website:
 
   
     ${encodeURIComponent(message)}
   
   `} startIcon={<Whatsapp/>} disabled={!totalItems}>Enquire On Whatsapp</Button>
-   <Button id='btn' sx={{backgroundColor:'blue', color:'white', marginLeft:'10px'}} component={'button'}  startIcon={<PayIcon/>} disabled={!totalItems}
+   <Button id='btn' sx={{backgroundColor:'blue', color:'white', marginLeft:'10px',marginY:'5px'}} component={'button'}  startIcon={<PayIcon/>} disabled={!totalItems}
 
    onClick={async ()=>{
     setShowMpesaInput(true)
